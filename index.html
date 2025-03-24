@@ -62,6 +62,27 @@
             }).addTo(map);
             console.log('Circle added to map.');
         }
+
+        // Function to get the current location and set the map view
+        function setCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var lat = position.coords.latitude;
+                    var lng = position.coords.longitude;
+                    map.setView([lat, lng], 13);
+                    L.marker([lat, lng]).addTo(map)
+                        .bindPopup('You are here.')
+                        .openPopup();
+                }, function() {
+                    console.error("Geolocation failed.");
+                });
+            } else {
+                console.error("Geolocation is not supported by this browser.");
+            }
+        }
+
+        // Call the function to set the current location when the page loads
+        window.onload = setCurrentLocation;
     </script>
     
     <script src="./script.js"></script>
